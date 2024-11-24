@@ -7,34 +7,36 @@ import { IoMdClose } from "react-icons/io";
 
 function Error() {
 
-    const { error,setError } = useContext(MyContext)
+    const { error, setError } = useContext(MyContext)
 
-    function handleClick(){
+    function handleClick() {
         setError("")
     }
 
     useEffect(() => {
-        const preventScroll = (event) => {
-            event.preventDefault();
-        };
+        if (error) {
+            const preventScroll = (event) => {
+                event.preventDefault();
+            };
 
-        window.addEventListener('wheel', preventScroll, { passive: false });
+            window.addEventListener('wheel', preventScroll, { passive: false });
 
-        //window.addEventListener('touchstart', preventScroll, { passive: false });
-        window.addEventListener('touchmove', preventScroll, { passive: false });
+            //window.addEventListener('touchstart', preventScroll, { passive: false });
+            window.addEventListener('touchmove', preventScroll, { passive: false });
 
-        return () => {
-            window.removeEventListener('wheel', preventScroll, { passive: false });
-            //window.removeEventListener('touchstart', preventScroll, { passive: false });
-            window.removeEventListener('touchmove', preventScroll, { passive: false });
-        };
-    }, []);
+            return () => {
+                window.removeEventListener('wheel', preventScroll, { passive: false });
+                //window.removeEventListener('touchstart', preventScroll, { passive: false });
+                window.removeEventListener('touchmove', preventScroll, { passive: false });
+            };
+        }
+    }, [error]);
 
     if (error) {
         return (
             <div className={styles.errorContainer}>
                 <div className={styles.error}>
-                    <span onClick={handleClick} className={styles.icon2}><IoMdClose/></span>
+                    <span onClick={handleClick} className={styles.icon2}><IoMdClose /></span>
                     <p>{error}</p>
                 </div>
             </div>
